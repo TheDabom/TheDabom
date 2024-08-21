@@ -26,7 +26,7 @@ model.compile({
 
 // Function to predict using the model
 async function makePrediction(inputData) {
-    const inputTensor = tf.tensor2d([inputData], [1, 6]);  // Convert to 2D tensor with shape [1, 6]
+    const inputTensor = tf.tensor2d([inputData], [1, 6]);  // Convert to 2D tensor with shape [1, 6])
     const prediction = model.predict(inputTensor);
     const predictionData = await prediction.data();
     return Array.from(predictionData);  // Convert the tensor to a regular array
@@ -50,7 +50,7 @@ async function trainModel() {
     console.log('Model training complete.');
 }
 
-// Train the model once when the script is loaded
-trainModel();
+// Ensure the model is trained before making predictions
+await trainModel();
 
 export { makePrediction };
