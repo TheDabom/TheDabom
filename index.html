@@ -26,23 +26,30 @@
                 return;
             }
 
-            // Use TensorFlow.js to make a prediction
-            const [pdi, particle_size, zeta_potential] = await makePrediction(params);
+            console.log('Input Parameters:', params);
 
-            // Randomly choose an image
-            let images = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"];
-            let selected_image = images[Math.floor(Math.random() * images.length)];
+            try {
+                const [pdi, particle_size, zeta_potential] = await makePrediction(params);
+                console.log('Prediction Results:', pdi, particle_size, zeta_potential);
 
-            // Display the results
-            document.getElementById('result').innerHTML = `
-                <div style="margin-top: 20px;">
-                    <h2>Prediction Results</h2>
-                    <p><b>PDI:</b> ${pdi.toFixed(2)}</p>
-                    <p><b>Particle Size:</b> ${particle_size.toFixed(2)}</p>
-                    <p><b>Zeta Potential:</b> ${zeta_potential.toFixed(2)}</p>
-                    <img src="${selected_image}" alt="Predicted Particle Shape" style="width:200px;height:200px;">
-                </div>
-            `;
+                // Randomly choose an image
+                let images = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"];
+                let selected_image = images[Math.floor(Math.random() * images.length)];
+
+                // Display the results
+                document.getElementById('result').innerHTML = `
+                    <div style="margin-top: 20px;">
+                        <h2>Prediction Results</h2>
+                        <p><b>PDI:</b> ${pdi.toFixed(2)}</p>
+                        <p><b>Particle Size:</b> ${particle_size.toFixed(2)}</p>
+                        <p><b>Zeta Potential:</b> ${zeta_potential.toFixed(2)}</p>
+                        <img src="${selected_image}" alt="Predicted Particle Shape" style="width:200px;height:200px;">
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error during prediction:', error);
+                alert('An error occurred during prediction. Please check the console for more details.');
+            }
         }
     </script>
 </head>
