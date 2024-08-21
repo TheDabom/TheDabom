@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Particle Prediction</title>
+    <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script type="module">
         import { makePrediction } from './model.js';
 
-        async function handlePrediction() {
+        function handlePrediction() {
             let params = [];
             for (let i = 1; i <= 6; i++) {
                 let value = parseFloat(document.getElementById('param' + i).value);
@@ -25,15 +26,13 @@
                 return;
             }
 
-            console.log('Input Parameters:', params);
-
-            try {
-                const [pdi, particle_size, zeta_potential] = await makePrediction(params);
-                console.log('Prediction Results:', pdi, particle_size, zeta_potential);
-
+            makePrediction(params).then(prediction => {
+                const [pdi, particle_size, zeta_potential] = prediction;
+                // Randomly choose an image
                 let images = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"];
                 let selected_image = images[Math.floor(Math.random() * images.length)];
 
+                // Display the results
                 document.getElementById('result').innerHTML = `
                     <div style="margin-top: 20px;">
                         <h2>Prediction Results</h2>
@@ -43,10 +42,7 @@
                         <img src="${selected_image}" alt="Predicted Particle Shape" style="width:200px;height:200px;">
                     </div>
                 `;
-            } catch (error) {
-                console.error('Error during prediction:', error);
-                alert('An error occurred during prediction. Please check the console for more details.');
-            }
+            });
         }
     </script>
 </head>
