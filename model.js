@@ -43,6 +43,3 @@ async function trainModel() {
 trainModel();
 
 export { makePrediction };
-await trainModel();
-
-export { makePrediction };
